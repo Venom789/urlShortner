@@ -1,0 +1,15 @@
+.url-box {
+  display: flex;
+  justify-content: center;
+  gap:50px;
+  border: 1px solid rgb(173, 169, 169);
+  border-radius:7px;
+  padding:10px;
+  margin-top: 6px;
+  background: rgb(24, 19, 19);
+  color:rgb(12, 231, 247);
+}
+.url-box a{
+  color:rgb(12, 231, 247);
+  text-decoration:none;
+}
