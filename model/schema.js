@@ -5,7 +5,6 @@ const saveUrlSchema = new mongoose.Schema({
   token: { type: String, required: true },
   url: {
     type: String,
-    unique: [true, "url already exits"],
     maxlength: 4000,
     required: true,
   },
@@ -13,7 +12,14 @@ const saveUrlSchema = new mongoose.Schema({
   clicks: { type: Number, default: 0 },
 });
 
+const saveUserSchema = new mongoose.Schema({
+  email: { type: String, required: true, unique: true },
+  token: { type: String, required: true, unique: true },
+});
+
 // now we will export the model
 // with the upper schema
+const saveURL = mongoose.model("saveURL", saveUrlSchema);
+const users = mongoose.model("users", saveUserSchema);
 
-module.exports = mongoose.model("saveURL", saveUrlSchema);
+module.exports = { saveURL, users };
