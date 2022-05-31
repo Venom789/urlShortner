@@ -1,8 +1,9 @@
-const saveURL = require("../model/schema");
+const { saveURL, users } = require("../model/schema");
 const { uid } = require("../helpers/uid");
 const checkLogin = require("../middleware/checkLogin");
+const saveUser = require("../middleware/saveUser");
 
-const homePage = (req, res) => {
+const homePage = async (req, res) => {
   if (req.oidc.isAuthenticated()) {
     if (req.oidc.user.email == process.env.ADMIN_EMAIL) {
       res.render("admin/index", {
@@ -10,6 +11,7 @@ const homePage = (req, res) => {
         userData: req.oidc.user,
       });
     } else {
+      saveUser(req, res);
       res.render("index", {
         isLogin: req.oidc.isAuthenticated(),
         userData: req.oidc.user,
@@ -47,7 +49,7 @@ const shortenURL = async (req, res) => {
       res.status(401).json({ error: "unauthorized" });
     }
   } catch (error) {
-    res.status(500).json({ msg: error });
+    res.status(500).json({ msg: "error" });
   }
 };
 
@@ -88,7 +90,7 @@ const getAllUsers = async (req, res) => {
   const count = req.query.count;
 
   if (token == process.env.ADMIN_TOKEN) {
-    const allUsers = await saveURL.find();
+    const allUsers = await users.find();
     if (count > 0) {
       res.json(allUsers.reverse().slice(0, count));
     } else res.json(allUsers);
@@ -120,6 +122,16 @@ const viewAllUsersPage = (req, res) => {
   }
 };
 
+const singleUserPage = (req, res) => {
+  if (req.oidc.user.email == process.env.ADMIN_EMAIL) {
+    res.render("admin/singleUser", {
+      userData: req.oidc.user,
+    });
+  } else {
+    res.redirect("./login");
+  }
+};
+
 module.exports = {
   mapURL,
   shortenURL,
@@ -128,4 +140,5 @@ module.exports = {
   getAllUsers,
   viewAllUrlsPage,
   viewAllUsersPage,
+  singleUserPage,
 };
