@@ -4,6 +4,7 @@ const {
   shortenURL,
   mapURL,
   homePage,
+  singleUserPage,
   getAllUrls,
   viewAllUrlsPage,
   viewAllUsersPage,
@@ -11,6 +12,7 @@ const {
 } = require("../controllers/mainController.js");
 
 router.route("/").get(homePage);
+router.route("/view-single-user/:id").get(singleUserPage);
 router.route("/view-all").get(viewAllUrlsPage);
 router.route("/view-all-users").get(viewAllUsersPage);
 router.route("/api/v1/shorten-url").post(shortenURL);

@@ -10,8 +10,26 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-    <link href="assest/style/index.css" rel="stylesheet" type="text/css" />
-
+<style>
+  a{
+    text-decoration: none;
+    color:white !important;
+  }
+  .user-box{
+    display: block;
+padding:16px;
+text-align: center;
+background: rgb(80, 73, 73);
+border-radius: 13px;
+width: 400px;
+margin-left: auto;
+margin-right: auto;
+margin-top: 6px;
+}
+.user-box:hover{
+  transform: scale(1.2);
+}
+</style>
     <title>Url Shortener - view All</title>
   </head>
   <body>
@@ -32,11 +50,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item me-4">
-              <a class="nav-link" aria-current="page" href="#">Home</a>
+              <a class="nav-link" aria-current="page" href="/">Home</a>
             </li>
-            <li class="nav-item me-4">
-              <a class="nav-link" aria-current="page" href="#">Profile</a>
-            </li>
+           
             <li class="nav-item me-4">
               <a
                 class="nav-link active"
@@ -53,7 +69,7 @@
       </div>
     </nav>
     <section>
-      <h3 style="text-align: center">All Users</h3>
+      <h3 style="text-align: center" class="m-5">All Users</h3>
       <div class="container" id="users_container"></div>
     </section>
   </body>
@@ -76,7 +92,7 @@
       const urls = await getAllUsers();
       const recentUrlsHTML = urls.map((item) => {
         const HTML = `
-        <div class="url-box">
+        <div class="user-box">
           <a href="${
             "/view-single-user/" + item.token
           }" target="_blank"> <h5>Email - ${item.email}</h5></a>
