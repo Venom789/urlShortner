@@ -12,7 +12,7 @@
     />
     <link href="assest/style/index.css" rel="stylesheet" type="text/css" />
 
-    <title>Url Shortener - view All</title>
+    <title>View All Url</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -32,17 +32,15 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item me-4">
-              <a class="nav-link" aria-current="page" href="#">Home</a>
+              <a class="nav-link" aria-current="page" href="/">Home</a>
             </li>
+
             <li class="nav-item me-4">
               <a class="nav-link" aria-current="page" href="#">Profile</a>
             </li>
             <li class="nav-item me-4">
-              <a
-                class="nav-link active"
-                aria-current="page"
-                href="/view-all-users"
-                >View All Users</a
+              <a class="nav-link active" aria-current="page" href="#"
+                >View All Urls</a
               >
             </li>
             <li class="nav-item me-4">
@@ -52,10 +50,25 @@
         </div>
       </div>
     </nav>
-    <section>
-      <h3 style="text-align: center">All Users</h3>
-      <div class="container" id="users_container"></div>
-    </section>
+
+    <main style="text-align: center; margin: 25px">
+      <section>
+        <h3>All Urls</h3>
+        <div class="container">
+          <table class="table tabel-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Shorten Url</th>
+                <th scope="col">Url</th>
+                <th scope="col">Number of Clicks</th>
+              </tr>
+            </thead>
+            <tbody id="urls_container"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
   </body>
   <script
     src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
@@ -68,28 +81,30 @@
     crossorigin="anonymous"
   ></script>
   <script>
-    const token = "<%-userData.sub%>";
-    const users_container = document.getElementById("users_container");
-    const api_getAll_users = `http://localhost:3000/api/v1/getAllusers`;
+    const pathArray = window.location.pathname.split("/");
 
-    const showAllUsers = async () => {
-      const urls = await getAllUsers();
-      const recentUrlsHTML = urls.map((item) => {
+    const token = pathArray[pathArray.length - 1];
+    const urls_container = document.getElementById("urls_container");
+    const api_getAll_urls = `http://localhost:3000/api/v1/getallurls`;
+
+    const showAllUrls = async () => {
+      const urls = await getAllUrls();
+      const recentUrlsHTML = urls.map((item, i) => {
         const HTML = `
-        <div class="url-box">
-          <a href="${
-            "/view-single-user/" + item.token
-          }" target="_blank"> <h5>Email - ${item.email}</h5></a>
-          
-        </div>
+            <tr>
+                <th scope="row">${i + 1}</th>
+                <td>${item.shortenUrl}</td>
+                <td  >${item.url}</td>
+                <td>${item.clicks}</td>
+              </tr>
         `;
         return HTML;
       });
-      users_container.innerHTML = recentUrlsHTML;
+      urls_container.innerHTML = recentUrlsHTML;
     };
 
-    const getAllUsers = async () => {
-      const resp = await fetch(api_getAll_users + `/${token}`, {
+    const getAllUrls = async () => {
+      const resp = await fetch(api_getAll_urls + `/${token}`, {
         method: "GET",
         headers: { "Content-type": "application/json; charset=UTF-8" },
       });
@@ -97,6 +112,6 @@
       console.log(resp_json);
       return resp_json;
     };
-    showAllUsers();
+    showAllUrls();
   </script>
 </html>
