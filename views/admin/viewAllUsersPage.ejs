@@ -86,7 +86,7 @@ margin-top: 6px;
   <script>
     const token = "<%-userData.sub%>";
     const users_container = document.getElementById("users_container");
-    const api_getAll_users = `http://localhost:3000/api/v1/getAllusers`;
+    const api_getAll_users = `https://urls4.herokuapp.com/api/v1/getAllusers`;
 
     const showAllUsers = async () => {
       const urls = await getAllUsers();
