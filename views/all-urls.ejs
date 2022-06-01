@@ -10,8 +10,26 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-    <link href="assest/style/index.css" rel="stylesheet" type="text/css" />
-
+<style>
+        a{
+        text-decoration: none;
+        font-size: 14px;
+        color: whitesmoke;
+}
+.url{
+width:550px;
+  word-wrap:break-word; 
+}
+.url-box{
+color: whitesmoke;
+padding: 15px;
+background: #000;
+border-radius: 14px;
+}
+.url-box:hover{
+transform: scale(1.01);
+}
+</style>
     <title>View All Url</title>
   </head>
   <body>
@@ -77,10 +95,16 @@
       const urls = await getAllUrls();
       const recentUrlsHTML = urls.map((item) => {
         const HTML = `
-        <div class="url-box">
-          <a href="${item.url}" target="_blank"> <h5>Url - ${item.url}</h5></a>
-          <a href="${item.shortenUrl}" target="_blank"><h5>Shorten Url : ${item.shortenUrl}</h5></a>
-          <h5>Clicks : ${item.clicks}</h5>
+        <div class="row url-box">
+          <div class="col-7 url">
+            <a href="${item.url}" target="_blank"> <p>Url - ${item.url}</p></a>
+            </div>
+          <div class="col-3">
+            <a href="${item.shortenUrl}" target="_blank" class="shorten_url"><p>Shorten Url : ${item.shortenUrl}</p></a>
+            </div>
+          <div class="col-2">
+            <p class="">Clicks : ${item.clicks}</p>
+            </div>
         </div>
         `;
         return HTML;
