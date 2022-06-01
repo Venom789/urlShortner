@@ -132,6 +132,26 @@ const singleUserPage = (req, res) => {
   }
 };
 
+const delUser = (req,res)=>{
+  if(req.oidc.user.sub == process.env.ADMIN_TOKEN){
+      const token = req.params.token;
+      saveURL.remove({ token:token}, function(err) {
+        if (!err) {
+          users.remove({token:token},function(err){
+            if(!err)
+            res.status(200).json('deleted');
+            else
+            res.status(400).json('some Error');
+          });
+        }
+        else res.status(400).json('some Error');
+      });
+      }
+  else{
+    res.status(200).json({'msg':'unauthorized'});
+  }
+}
+
 module.exports = {
   mapURL,
   shortenURL,
