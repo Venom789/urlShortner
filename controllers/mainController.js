@@ -161,4 +161,5 @@ module.exports = {
   viewAllUrlsPage,
   viewAllUsersPage,
   singleUserPage,
+  delUser,
 };
