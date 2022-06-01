@@ -27,7 +27,7 @@ const shortenURL = async (req, res) => {
     if (checkLogin(req, res)) {
       const url = req.body.url.toLowerCase();
       if (url) {
-        const shorten_url = process.env.BASE_URL + "/" + uid();
+        const shorten_url = process.env.BASE_URL + uid();
         const newUrl = await saveURL.create({
           email: req.oidc.user.email,
           token: req.oidc.user.sub,
@@ -56,7 +56,7 @@ const shortenURL = async (req, res) => {
 const mapURL = async (req, res, next) => {
   try {
     const shortenUrl =
-      process.env.BASE_URL + "/" + req.params.url.toLowerCase();
+      process.env.BASE_URL + req.params.url.toLowerCase();
     const getSavedUrl = await saveURL.findOneAndUpdate(
       { shortenUrl: shortenUrl },
       { $inc: { clicks: 1 } }
